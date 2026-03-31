@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday David</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}
+#app{
+  width:100%;max-width:700px;min-height:100vh;
+  background:#09070a;
+  font-family:'Cormorant Garamond',serif;
+  color:#e8d5a3;
+  position:relative;overflow:hidden;
+}
+canvas#particles{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+#vignette{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(0,0,0,0.8) 100%);
+}
+#content{position:relative;z-index:3;padding:2.5rem 2rem 3rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
+
+#title-area{text-align:center;padding-top:0.5rem;}
+#flame-icon{font-size:28px;display:block;animation:flicker 2.5s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(245,140,20,0.9));margin-bottom:0.5rem;}
+@keyframes flicker{0%,100%{transform:scaleY(1) skewX(0deg)}25%{transform:scaleY(1.06) skewX(-1.5deg)}50%{transform:scaleY(0.96) skewX(1deg)}75%{transform:scaleY(1.04) skewX(-0.5deg)}}
+h1{
+  font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,30px);
+  font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:#f5c96a;
+  text-shadow:0 0 40px rgba(245,180,60,0.5),0 0 80px rgba(245,140,20,0.2);
+}
+.subtitle{font-size:13px;letter-spacing:0.35em;color:#7a5a30;margin-top:6px;text-transform:uppercase;}
+
+#divider{width:100px;height:1px;background:linear-gradient(90deg,transparent,#9a6a20,transparent);margin:0.2rem auto;}
+
+#poem-area{
+  width:100%;max-width:580px;
+  text-align:center;
+  font-size:clamp(15px,2.8vw,18px);
+  line-height:1.9;
+  color:#ddc98a;
+  display:flex;flex-direction:column;
+  align-items:center;
+  gap:1.4rem;
+}
+.stanza{
+  opacity:0.12;
+  transition:opacity 1s ease,text-shadow 1s ease;
+  max-width:520px;
+}
+.stanza.active{
+  opacity:1;
+  text-shadow:0 0 30px rgba(245,180,60,0.15);
+}
+.stanza.past{opacity:0.2;}
+.stanza p{margin-bottom:2px;}
+
+#birthday-final{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(17px,3.5vw,24px);
+  font-weight:600;color:#f5c96a;
+  text-shadow:0 0 30px rgba(245,180,60,0.9),0 0 60px rgba(245,140,20,0.4);
+  text-align:center;
+  opacity:0;transition:opacity 1.5s ease;
+  margin-top:0.5rem;
+}
+#birthday-final.active{opacity:1;}
+#birthday-final .closing{
+  display:block;font-family:'Cormorant Garamond',serif;
+  font-size:0.75em;font-weight:300;
+  color:#c9a560;margin-top:0.4rem;
+  font-style:italic;
+}
+
+#controls{
+  display:flex;flex-direction:column;align-items:center;
+  gap:0.9rem;width:100%;max-width:360px;margin-top:0.5rem;
+}
+.btn{
+  background:transparent;
+  border:1px solid rgba(245,180,60,0.4);
+  color:#f5c96a;
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;letter-spacing:0.15em;
+  padding:11px 32px;border-radius:40px;cursor:pointer;
+  transition:all 0.3s;
+  display:flex;align-items:center;gap:10px;
+  width:100%;justify-content:center;
+}
+.btn:hover{background:rgba(245,180,60,0.1);border-color:#f5c96a;box-shadow:0 0 25px rgba(245,140,20,0.2);}
+.btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+#progress-wrap{width:100%;display:none;}
+#prog-track{width:100%;height:2px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;}
+#prog-fill{height:100%;width:0%;background:linear-gradient(90deg,#7a4a10,#f5c96a);transition:width 0.15s linear;}
+#prog-time{font-size:11px;color:#5a4020;letter-spacing:0.2em;text-align:right;margin-top:4px;}
+
+#status{font-size:12px;letter-spacing:0.25em;color:#5a4020;text-align:center;min-height:16px;text-transform:uppercase;}
+#creator-panel{
+  background:rgba(245,180,60,0.05);
+  border-radius:20px;
+  padding:1rem;
+  margin-top:1rem;
+  border:1px solid rgba(245,180,60,0.15);
+}
+#creator-panel h3{font-size:12px;color:#9a6a20;margin-bottom:0.8rem;text-align:center;}
+.creator-buttons{display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;}
+.creator-btn{
+  background:rgba(245,180,60,0.1);
+  border:1px solid rgba(245,180,60,0.3);
+  color:#e8c07a;
+  font-size:12px;
+  padding:6px 16px;
+  border-radius:30px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.creator-btn:hover{background:rgba(245,180,60,0.25);}
+.hidden{display:none;}
+#record-instruction{font-size:11px;color:#7a5a30;text-align:center;margin-top:8px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <canvas id="particles"></canvas>
+  <div id="vignette"></div>
+  <div id="content">
+
+    <div id="title-area">
+      <span id="flame-icon">🕯</span>
+      <h1>A Toast to the Man of Many Hats</h1>
+      <div class="subtitle">For David</div>
+    </div>
+
+    <div id="divider"></div>
+
+    <div id="poem-area">
+      <div class="stanza" id="s0">
+        <p>The sun hasn't fully climbed the sky,</p>
+        <p>But you are already miles into the day.</p>
+        <p>With a phone that never stops buzzing</p>
+        <p>And a spirit that refuses to slow down,</p>
+        <p>You navigate the world of business and finance</p>
+        <p>With the same steady hand you use on the farm.</p>
+      </div>
+
+      <div class="stanza" id="s1">
+        <p>You are a husband who anchors the home,</p>
+        <p>A father building a legacy for tomorrow.</p>
+        <p>You know that "life has no rest" when there are dreams to feed</p>
+        <p>So may this year bring the "good money"</p>
+        <p>And the great peace you've earned.</p>
+      </div>
+
+      <div class="stanza" id="s2">
+        <p>May the projects you've planted continue to bloom toward forty,</p>
+        <p>And may your birthday be a rare moment to breathe,</p>
+        <p>To look at the life you are constructing</p>
+        <p>And see that it is good.</p>
+      </div>
+
+      <div class="stanza" id="s3">
+        <p>So here's to the man who isn't afraid to get his boots dirty,</p>
+        <p>The one who hustles in town and thrives in the green,</p>
+        <p>The jovial soul who keeps everyone's spirits high.</p>
+      </div>
+
+      <div id="birthday-final">
+        🎂 Happy Birthday, David 🎂
+        <span class="closing">
+          May your numbers keep multiplying,<br>
+          And your harvest always be as big as your laughter.
+        </span>
+      </div>
+    </div>
+
+    <div id="controls">
+      <div id="status">✨ A special voice message awaits ✨</div>
+      <div id="progress-wrap">
+        <div id="prog-track"><div id="prog-fill"></div></div>
+        <div id="prog-time">0:00 / 0:00</div>
+      </div>
+      <button class="btn" id="play-btn">🎙️ Listen to Voice Message</button>
+      
+      <!-- Creator Panel - Only visible to you when setting this up -->
+      <div id="creator-panel">
+        <h3>🎤 For the Creator - Record Your Voice</h3>
+        <div class="creator-buttons">
+          <button class="creator-btn" id="creator-record">🎙️ Record Voice</button>
+          <button class="creator-btn" id="creator-stop" disabled>⏹️ Stop</button>
+          <button class="creator-btn" id="creator-preview">👂 Preview</button>
+          <button class="creator-btn" id="creator-save">💾 Save & Generate Link</button>
+        </div>
+        <div id="record-instruction">Record your voice reading the poem. When done, click Save - then share the page!</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Particle engine
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+const app = document.getElementById('app');
+
+function resize(){canvas.width=app.offsetWidth;canvas.height=app.offsetHeight;}
+resize();
+window.addEventListener('resize',resize);
+
+class Particle{
+  constructor(){this.reset(true);}
+  reset(init){
+    this.x=Math.random()*canvas.width;
+    this.y=init?Math.random()*canvas.height:canvas.height+10;
+    this.size=Math.random()*2.8+0.4;
+    this.vy=Math.random()*0.9+0.25;
+    this.vx=(Math.random()-0.5)*0.35;
+    this.phase=Math.random()*Math.PI*2;
+    this.life=0;
+    this.maxLife=Math.random()*0.5+0.4;
+    const r=Math.random();
+    this.r=r<0.4?245:r<0.7?240:r<0.85?255:200;
+    this.g=r<0.4?180:r<0.7?120:r<0.85?215:100;
+    this.b=r<0.4?60:r<0.7?30:r<0.85?100:20;
+    if(init){this.life=Math.random()*this.maxLife;}
+  }
+  update(){
+    this.y-=this.vy;
+    this.x+=this.vx+Math.sin(this.y*0.018+this.phase)*0.35;
+    this.life+=0.006;
+    if(this.life<0.25) this.alpha=this.life/0.25;
+    else if(this.life>this.maxLife) this.alpha=Math.max(0,1-(this.life-this.maxLife)/(1-this.maxLife));
+    else this.alpha=1;
+    if(this.y<-5||this.life>=1) this.reset(false);
+  }
+  draw(){
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${this.r},${this.g},${this.b},${this.alpha*0.7})`;
+    ctx.fill();
+  }
+}
+
+const parts=[];
+for(let i=0;i<150;i++) parts.push(new Particle());
+(function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);parts.forEach(p=>{p.update();p.draw();});requestAnimationFrame(loop);})();
+
+// Poem animation functions
+const stanzas=[...document.querySelectorAll('.stanza')];
+const bdLine=document.getElementById('birthday-final');
+
+function activateStanza(i){
+  stanzas.forEach((s,j)=>{
+    s.classList.remove('active','past');
+    if(j<i) s.classList.add('past');
+    else if(j===i) s.classList.add('active');
+  });
+  if(i>=stanzas.length) bdLine.classList.add('active');
+}
+
+function resetPoem(){
+  stanzas.forEach(s=>s.classList.remove('active','past'));
+  bdLine.classList.remove('active');
+  stanzas[0].classList.add('active');
+}
+
+function runPoemAnim(durationMs){
+  stanzas.forEach(s=>{s.classList.remove('active','past');});
+  bdLine.classList.remove('active');
+  const steps=stanzas.length+1;
+  const interval=durationMs/steps;
+  let i=0;
+  activateStanza(i);
+  const t=setInterval(()=>{
+    i++;
+    activateStanza(i);
+    if(i>=steps-1) clearInterval(t);
+  },interval);
+  return t;
+}
+
+// Audio handling with saved recording
+let savedAudioUrl = null;
+let savedAudioBlob = null;
+let audioElement = null;
+
+// Check if there's saved audio in localStorage
+function loadSavedAudio(){
+  const savedData = localStorage.getItem('david_birthday_audio');
+  if(savedData){
+    const binary = atob(savedData);
+    const bytes = new Uint8Array(binary.length);
+    for(let i=0; i<binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    savedAudioBlob = new Blob([bytes], {type: 'audio/webm'});
+    savedAudioUrl = URL.createObjectURL(savedAudioBlob);
+    document.getElementById('status').textContent = '🎤 Your voice message is ready! Click to listen.';
+    document.getElementById('play-btn').style.opacity = '1';
+  }
+}
+
+// Save audio to localStorage (so it persists on the page)
+function saveAudioToLocal(blob){
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result.split(',')[1];
+      localStorage.setItem('david_birthday_audio', base64);
+      resolve();
+    };
+    reader.readAsDataURL(blob);
+  });
+}
+
+// Recording functionality for creator
+let creatorRecorder = null;
+let creatorChunks = [];
+let isCreatorRecording = false;
+let creatorStream = null;
+
+const creatorRecordBtn = document.getElementById('creator-record');
+const creatorStopBtn = document.getElementById('creator-stop');
+const creatorPreviewBtn = document.getElementById('creator-preview');
+const creatorSaveBtn = document.getElementById('creator-save');
+const playBtn = document.getElementById('play-btn');
+const progWrap = document.getElementById('progress-wrap');
+const progFill = document.getElementById('prog-fill');
+const progTime = document.getElementById('prog-time');
+const statusDiv = document.getElementById('status');
+
+function fmt(s){const m=Math.floor(s/60);const sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+
+creatorRecordBtn.addEventListener('click', async () => {
+  if(!isCreatorRecording){
+    try{
+      creatorStream = await navigator.mediaDevices.getUserMedia({audio: true});
+      creatorChunks = [];
+      creatorRecorder = new MediaRecorder(creatorStream);
+      creatorRecorder.ondataavailable = e => creatorChunks.push(e.data);
+      creatorRecorder.onstop = () => {
+        const blob = new Blob(creatorChunks, {type: 'audio/webm'});
+        savedAudioBlob = blob;
+        if(savedAudioUrl) URL.revokeObjectURL(savedAudioUrl);
+        savedAudioUrl = URL.createObjectURL(blob);
+        statusDiv.textContent = '✅ Recording saved! Click Preview to hear it.';
+        creatorPreviewBtn.disabled = false;
+        creatorSaveBtn.disabled = false;
+        if(creatorStream) creatorStream.getTracks().forEach(t=>t.stop());
+      };
+      creatorRecorder.start();
+      isCreatorRecording = true;
+      creatorRecordBtn.disabled = true;
+      creatorStopBtn.disabled = false;
+      creatorPreviewBtn.disabled = true;
+      creatorSaveBtn.disabled = true;
+      statusDiv.textContent = '🔴 Recording... Read the poem aloud';
+    } catch(e){
+      statusDiv.textContent = '❌ Microphone access denied';
+    }
+  }
+});
+
+creatorStopBtn.addEventListener('click', () => {
+  if(creatorRecorder && isCreatorRecording){
+    creatorRecorder.stop();
+    isCreatorRecording = false;
+    creatorRecordBtn.disabled = false;
+    creatorStopBtn.disabled = true;
+    statusDiv.textContent = 'Recording stopped! Preview your voice message.';
+  }
+});
+
+creatorPreviewBtn.addEventListener('click', () => {
+  if(savedAudioUrl){
+    const previewAudio = new Audio(savedAudioUrl);
+    previewAudio.play();
+    statusDiv.textContent = '🎧 Previewing your voice...';
+  } else {
+    statusDiv.textContent = '⚠️ No recording yet. Record your voice first!';
+  }
+});
+
+creatorSaveBtn.addEventListener('click', async () => {
+  if(savedAudioBlob){
+    await saveAudioToLocal(savedAudioBlob);
+    statusDiv.textContent = '💾 Voice saved! Now share this page with David!';
+    alert('Your voice is now embedded in this page!\n\nUpload this HTML file to GitHub Pages, and when David opens the link, he can click "Listen to Voice Message" to hear you read the poem.');
+  } else {
+    statusDiv.textContent = '⚠️ Nothing to save yet. Record your voice first!';
+  }
+});
+
+// Play the saved audio with poem animation
+playBtn.addEventListener('click', () => {
+  if(!savedAudioUrl){
+    statusDiv.textContent = '🎙️ No voice message yet. Use the creator panel above to record!';
+    return;
+  }
+  
+  const audio = new Audio(savedAudioUrl);
+  progWrap.style.display = 'block';
+  progFill.style.width = '0%';
+  playBtn.disabled = true;
+  playBtn.textContent = '🕯 Playing Your Voice...';
+  statusDiv.textContent = '🎵 Playing your voice message with the poem...';
+  
+  audio.addEventListener('loadedmetadata', () => {
+    const dur = audio.duration;
+    runPoemAnim(dur * 1000);
+    const tick = setInterval(() => {
+      const pct = (audio.currentTime / dur) * 100;
+      progFill.style.width = Math.min(100, pct) + '%';
+      progTime.textContent = fmt(audio.currentTime) + ' / ' + fmt(dur);
+      if(audio.ended) clearInterval(tick);
+    }, 150);
+  });
+  
+  audio.addEventListener('ended', () => {
+    playBtn.disabled = false;
+    playBtn.textContent = '🎙️ Listen Again';
+    statusDiv.textContent = '✨ Happy Birthday, David! ✨';
+    stanzas.forEach(s => s.classList.add('active'));
+    bdLine.classList.add('active');
+  });
+  
+  audio.play();
+});
+
+// Load any saved audio on page load
+loadSavedAudio();
+
+// If no audio saved, show instruction
+if(!localStorage.getItem('david_birthday_audio')){
+  statusDiv.textContent = '🎤 For you: Record your voice in the panel below!';
+}
+
+// Initial poem state
+resetPoem();
+bdLine.classList.add('active');
+</script>
+</body>
+</html>
