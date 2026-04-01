@@ -16,91 +16,37 @@ html,body{background:#000;min-height:100vh;display:flex;flex-direction:column;al
   position:relative;overflow-x:hidden;
 }
 canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
-#vignette{
-  position:fixed;inset:0;z-index:2;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(0,0,0,0.8) 100%);
-}
+#vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(0,0,0,0.8) 100%);}
 #content{position:relative;z-index:3;padding:2.5rem 2rem 3rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
-
 #title-area{text-align:center;padding-top:0.5rem;}
 #flame-icon{font-size:28px;display:block;animation:flicker 2.5s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(245,140,20,0.9));margin-bottom:0.5rem;}
 @keyframes flicker{0%,100%{transform:scaleY(1) skewX(0deg)}25%{transform:scaleY(1.06) skewX(-1.5deg)}50%{transform:scaleY(0.96) skewX(1deg)}75%{transform:scaleY(1.04) skewX(-0.5deg)}}
-h1{
-  font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,30px);
-  font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
-  color:#f5c96a;
-  text-shadow:0 0 40px rgba(245,180,60,0.5),0 0 80px rgba(245,140,20,0.2);
-}
+h1{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,30px);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#f5c96a;text-shadow:0 0 40px rgba(245,180,60,0.5),0 0 80px rgba(245,140,20,0.2);}
 .subtitle{font-size:13px;letter-spacing:0.35em;color:#7a5a30;margin-top:6px;text-transform:uppercase;}
-
 #divider{width:100px;height:1px;background:linear-gradient(90deg,transparent,#9a6a20,transparent);margin:0.2rem auto;}
-
-#poem-area{
-  width:100%;max-width:580px;
-  text-align:center;
-  font-size:clamp(15px,2.8vw,18px);
-  line-height:1.9;
-  color:#ddc98a;
-  display:flex;flex-direction:column;
-  align-items:center;
-  gap:1.4rem;
-}
-.stanza{
-  opacity:0.2;
-  transition:opacity 0.8s ease,text-shadow 0.5s ease, transform 0.3s ease;
-  max-width:520px;
-  transform: scale(0.98);
-}
-.stanza.active{
-  opacity:1;
-  text-shadow:0 0 30px rgba(245,180,60,0.3);
-  transform: scale(1);
-}
-.stanza.past{
-  opacity:0.4;
-}
+#poem-area{width:100%;max-width:580px;text-align:center;font-size:clamp(15px,2.8vw,18px);line-height:1.9;color:#ddc98a;display:flex;flex-direction:column;align-items:center;gap:1.4rem;}
+.stanza{opacity:0.2;transition:opacity 0.6s ease,text-shadow 0.4s ease, transform 0.3s ease;max-width:520px;transform: scale(0.98);}
+.stanza.active{opacity:1;text-shadow:0 0 30px rgba(245,180,60,0.4);transform: scale(1);}
+.stanza.past{opacity:0.35;}
 .stanza p{margin-bottom:2px;}
-
-#birthday-final{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(17px,3.5vw,24px);
-  font-weight:600;color:#f5c96a;
-  text-shadow:0 0 30px rgba(245,180,60,0.9),0 0 60px rgba(245,140,20,0.4);
-  text-align:center;
-  opacity:0;transition:opacity 1.5s ease;
-  margin-top:0.5rem;
-}
+#birthday-final{font-family:'Playfair Display',serif;font-size:clamp(17px,3.5vw,24px);font-weight:600;color:#f5c96a;text-shadow:0 0 30px rgba(245,180,60,0.9),0 0 60px rgba(245,140,20,0.4);text-align:center;opacity:0;transition:opacity 1.5s ease;margin-top:0.5rem;}
 #birthday-final.active{opacity:1;}
-
-#controls{
-  display:flex;flex-direction:column;align-items:center;
-  gap:0.9rem;width:100%;max-width:360px;margin-top:1.5rem;
-  margin-bottom:1rem;
-}
-.btn{
-  background:linear-gradient(135deg, rgba(245,180,60,0.15), rgba(245,140,20,0.05));
-  border:1px solid rgba(245,180,60,0.5);
-  color:#f5c96a;
-  font-family:'Cormorant Garamond',serif;
-  font-size:18px;letter-spacing:0.15em;
-  padding:14px 32px;border-radius:60px;cursor:pointer;
-  transition:all 0.3s;
-  display:flex;align-items:center;gap:12px;
-  width:100%;justify-content:center;
-  font-weight:500;
-}
+#controls{display:flex;flex-direction:column;align-items:center;gap:0.9rem;width:100%;max-width:360px;margin-top:1.5rem;margin-bottom:1rem;}
+.btn{background:linear-gradient(135deg, rgba(245,180,60,0.15), rgba(245,140,20,0.05));border:1px solid rgba(245,180,60,0.5);color:#f5c96a;font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:0.15em;padding:14px 32px;border-radius:60px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px;width:100%;justify-content:center;font-weight:500;}
 .btn:hover{background:rgba(245,180,60,0.25);border-color:#f5c96a;box-shadow:0 0 35px rgba(245,140,20,0.3);transform:scale(1.02);}
 .btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-
 #progress-wrap{width:100%;display:none;margin-top:0.5rem;}
 #prog-track{width:100%;height:3px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
 #prog-fill{height:100%;width:0%;background:linear-gradient(90deg,#f5c96a,#f5a420);transition:width 0.1s linear;border-radius:3px;}
 #prog-time{font-size:11px;color:#7a5a30;letter-spacing:0.2em;text-align:right;margin-top:6px;}
-
 #status{font-size:13px;letter-spacing:0.2em;color:#9a6a30;text-align:center;min-height:20px;}
-
 .play-icon{font-size:22px;animation: gentlePulse 2s infinite;}
 @keyframes gentlePulse{0%,100%{opacity:0.7;}50%{opacity:1;transform:scale(1.05);}}
+#embed-tool{background:rgba(245,180,60,0.1);border-radius:16px;padding:1.2rem;margin-top:1rem;border:1px solid rgba(245,180,60,0.3);width:100%;}
+#embed-tool h3{color:#f5c96a;font-size:14px;margin-bottom:12px;text-align:center;}
+#extract-btn,#final-export-btn{background:rgba(245,180,60,0.2);border:1px solid #f5c96a;color:#f5c96a;padding:8px 16px;border-radius:40px;cursor:pointer;font-size:12px;margin:4px;}
+#extract-btn:hover,#final-export-btn:hover{background:rgba(245,180,60,0.4);}
+.voice-status{font-size:12px;margin-top:8px;text-align:center;}
 </style>
 </head>
 <body>
@@ -108,69 +54,58 @@ h1{
   <canvas id="particles"></canvas>
   <div id="vignette"></div>
   <div id="content">
-
     <div id="title-area">
       <span id="flame-icon">🕯</span>
       <h1>A Toast to the Man of Many Hats</h1>
       <div class="subtitle">For David</div>
     </div>
-
     <div id="divider"></div>
-
     <div id="poem-area">
       <div class="stanza" data-order="0">
         <p>The sun hasn't fully climbed the sky,</p>
         <p>But you are already miles into the day.</p>
         <p>With a phone that never stops buzzing</p>
         <p>And a spirit that refuses to slow down,</p>
-       
       </div>
-
       <div class="stanza" data-order="1">
-	   <p>You navigate the world of business and finance</p>
+        <p>You navigate the world of business and finance</p>
         <p>With the same steady hand you use on the farm.</p>
         <p>You are a husband who anchors the home,</p>
         <p>A father building a legacy for tomorrow.</p>
         <p>You know that "life has no rest" when there are dreams to feed</p>
-
       </div>
-
       <div class="stanza" data-order="2">
-	    <p>So may this year bring the "good money"</p>
+        <p>So may this year bring the "good money"</p>
         <p>And the great peace you've earned.</p>
         <p>May the projects you've planted continue to bloom toward forty,</p>
         <p>And may your birthday be a rare moment to breathe,</p>
         <p>To look at the life you are constructing</p>
         <p>And see that it is good.</p>
       </div>
-
       <div class="stanza" data-order="3">
         <p>So here's to the man who isn't afraid to get his boots dirty,</p>
         <p>The one who hustles in town and thrives in the green,</p>
         <p>The jovial soul who keeps everyone's spirits high.</p>
       </div>
-
       <div id="birthday-final">
         🎂 Happy Birthday, David 🎂
-        <span class="closing">
-          May your numbers keep multiplying,<br>
-          And your harvest always be as big as your laughter.
-        </span>
+        <span class="closing">May your numbers keep multiplying,<br>And your harvest always be as big as your laughter.</span>
       </div>
     </div>
-
     <div id="controls">
-      <div id="status">✨ Click below to hear a special voice message ✨</div>
-      <div id="progress-wrap">
-        <div id="prog-track"><div id="prog-fill"></div></div>
-        <div id="prog-time">0:00 / 0:00</div>
+      <div id="status" class="voice-status">✨ Click below to hear a special voice message ✨</div>
+      <div id="progress-wrap"><div id="prog-track"><div id="prog-fill"></div></div><div id="prog-time">0:00 / 0:00</div></div>
+      <button class="btn" id="play-btn"><span class="play-icon">🎙️</span><span>Listen to Voice Message</span></button>
+      
+      <div id="embed-tool">
+        <h3>🔊 PERMANENT VOICE EMBEDDING TOOL</h3>
+        <div style="text-align:center;">
+          <button id="extract-btn">📤 STEP 1: Extract Voice from Old File</button>
+          <button id="final-export-btn" style="display:none;">💾 STEP 2: Export FINAL HTML with Voice</button>
+        </div>
+        <div id="embed-status" style="font-size:11px;color:#c9a560;text-align:center;margin-top:8px;"></div>
       </div>
-      <button class="btn" id="play-btn">
-        <span class="play-icon">🎙️</span>
-        <span>Listen to Voice Message</span>
-      </button>
     </div>
-
   </div>
 </div>
 
@@ -178,7 +113,6 @@ h1{
 // PARTICLE SYSTEM
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
-const app = document.getElementById('app');
 
 function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
 resize();
@@ -226,6 +160,7 @@ for(let i=0;i<180;i++) parts.push(new Particle());
 const stanzas = [...document.querySelectorAll('.stanza')];
 const bdLine = document.getElementById('birthday-final');
 let currentActiveIndex = -1;
+let embeddedAudioBase64 = null;
 
 function activateStanza(index){
   if(index === currentActiveIndex) return;
@@ -235,11 +170,8 @@ function activateStanza(index){
     if(i < index) s.classList.add('past');
     else if(i === index) s.classList.add('active');
   });
-  if(index >= stanzas.length) {
-    bdLine.classList.add('active');
-  } else {
-    bdLine.classList.remove('active');
-  }
+  if(index >= stanzas.length) bdLine.classList.add('active');
+  else bdLine.classList.remove('active');
 }
 
 function resetPoem(){
@@ -248,27 +180,18 @@ function resetPoem(){
   activateStanza(0);
 }
 
-// SCROLL TO POEM FUNCTION
 function scrollToPoem() {
   const poemArea = document.getElementById('poem-area');
-  const titleArea = document.getElementById('title-area');
-  const yOffset = -30;
-  const element = poemArea;
-  const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  const y = poemArea.getBoundingClientRect().top + window.pageYOffset - 20;
   window.scrollTo({top: y, behavior: 'smooth'});
 }
 
-// AUDIO - EMBEDDED VOICE
-// REPLACE THIS WITH YOUR ACTUAL AUDIO DATA WHEN YOU RUN THE CONSOLE SCRIPT
-// FOR NOW, IT WILL PROMPT YOU TO PASTE YOUR RECORDING
-let embeddedAudioBase64 = null;
-
-// Function to set audio from your existing recording
 function setEmbeddedAudio(base64Data) {
   embeddedAudioBase64 = base64Data;
-  const statusDiv = document.getElementById('status');
-  statusDiv.innerHTML = '✨ Voice message loaded! Click play to listen ✨';
+  document.getElementById('status').innerHTML = '✅ Voice embedded! Click play to listen ✨';
   document.getElementById('play-btn').disabled = false;
+  document.getElementById('embed-status').innerHTML = '✅ Voice loaded! Click STEP 2 to create final file.';
+  document.getElementById('final-export-btn').style.display = 'inline-block';
 }
 
 // Play functionality
@@ -282,14 +205,12 @@ function fmt(s){const m=Math.floor(s/60);const sec=Math.floor(s%60);return m+':'
 
 playBtn.addEventListener('click', () => {
   if(!embeddedAudioBase64) {
-    statusDiv.innerHTML = '⚠️ Please run the setup script in console first (paste your audio)';
+    statusDiv.innerHTML = '⚠️ Use the tool above to extract and embed your voice first!';
     return;
   }
   
-  // First, scroll smoothly to the poem
   scrollToPoem();
   
-  // Small delay to let scroll complete, then play audio
   setTimeout(() => {
     const binaryStr = atob(embeddedAudioBase64);
     const bytes = new Uint8Array(binaryStr.length);
@@ -304,50 +225,40 @@ playBtn.addEventListener('click', () => {
     playBtn.innerHTML = '<span>🕯 Playing...</span>';
     statusDiv.innerHTML = '🎵 Listening to your voice message... 🎵';
     
-   audio.addEventListener('loadedmetadata', () => {
-  const dur = audio.duration;
-  
-  // 👇 ADJUST THESE NUMBERS (in seconds) to match YOUR voice recording
-  // Listen to your recording and put the exact times when each stanza starts
-  const stanzaTimings = [
-    0,      // Stanza 0 (first verse) starts at 0 seconds
-    12.5,     // 👈 CHANGE THIS: Stanza 1 starts at ___ seconds
-    29.5,     // 👈 CHANGE THIS: Stanza 2 starts at ___ seconds
-    43,     // 👈 CHANGE THIS: Stanza 3 starts at ___ seconds
-    50      // 👈 CHANGE THIS: Final message starts at ___ seconds
-  ];
-  
-  audio.addEventListener('timeupdate', () => {
-    const currentTime = audio.currentTime;
-    const pct = (currentTime / dur) * 100;
-    progFill.style.width = Math.min(100, pct) + '%';
-    progTime.textContent = fmt(currentTime) + ' / ' + fmt(dur);
-    
-    // Find which stanza should be active based on your custom timings
-    let newIndex = 0;
-    for(let i = stanzaTimings.length - 1; i >= 0; i--) {
-      if(currentTime >= stanzaTimings[i]) {
-        newIndex = i;
-        break;
-      }
-    }
-    
-    if(newIndex !== currentActiveIndex && newIndex >= 0 && newIndex <= stanzas.length) {
-      activateStanza(newIndex);
+    audio.addEventListener('loadedmetadata', () => {
+      const dur = audio.duration;
       
-      if(newIndex < stanzas.length) {
-        const activeStanza = stanzas[newIndex];
-        if(activeStanza) {
-          activeStanza.scrollIntoView({behavior: 'smooth', block: 'center'});
+      // ADJUST THESE TIMINGS based on your recording!
+      const stanzaTimings = [
+        0,      // Stanza 0 start
+        12.5,   // Stanza 1 start - ADJUST THIS
+        29.5,   // Stanza 2 start - ADJUST THIS
+        43,     // Stanza 3 start - ADJUST THIS
+        50      // Final start - ADJUST THIS
+      ];
+      
+      audio.addEventListener('timeupdate', () => {
+        const currentTime = audio.currentTime;
+        const pct = (currentTime / dur) * 100;
+        progFill.style.width = Math.min(100, pct) + '%';
+        progTime.textContent = fmt(currentTime) + ' / ' + fmt(dur);
+        
+        let newIndex = 0;
+        for(let i = stanzaTimings.length - 1; i >= 0; i--) {
+          if(currentTime >= stanzaTimings[i]) {
+            newIndex = i;
+            break;
+          }
         }
-      }
-    }
-  });
-  
-  const tick = setInterval(() => {
-    if(audio.ended) clearInterval(tick);
-  }, 100);
-});
+        
+        if(newIndex !== currentActiveIndex && newIndex >= 0 && newIndex <= stanzas.length) {
+          activateStanza(newIndex);
+          if(newIndex < stanzas.length) {
+            stanzas[newIndex].scrollIntoView({behavior: 'smooth', block: 'center'});
+          }
+        }
+      });
+    });
     
     audio.addEventListener('ended', () => {
       playBtn.disabled = false;
@@ -359,36 +270,217 @@ playBtn.addEventListener('click', () => {
     });
     
     audio.play();
-  }, 400); // Delay for smooth scroll
+  }, 400);
+});
+
+// STEP 1: Extract voice from old file
+document.getElementById('extract-btn').addEventListener('click', () => {
+  const embedStatus = document.getElementById('embed-status');
+  embedStatus.innerHTML = '📋 Follow these steps:<br>1. Open your OLD HTML file (where you recorded)<br>2. Press F12 → Console<br>3. Paste: <code style="background:#000;padding:2px 4px;">localStorage.getItem("david_birthday_audio")</code><br>4. Copy the LONG string that appears<br>5. Paste it here:';
+  
+  const textarea = document.createElement('textarea');
+  textarea.placeholder = 'Paste your audio data here...';
+  textarea.style.width = '100%';
+  textarea.style.height = '80px';
+  textarea.style.background = '#1a1a1a';
+  textarea.style.color = '#f5c96a';
+  textarea.style.border = '1px solid #f5c96a';
+  textarea.style.borderRadius = '8px';
+  textarea.style.padding = '8px';
+  textarea.style.marginTop = '8px';
+  textarea.style.fontSize = '10px';
+  
+  const pasteBtn = document.createElement('button');
+  pasteBtn.textContent = '✅ Submit & Embed';
+  pasteBtn.style.background = '#f5c96a20';
+  pasteBtn.style.border = '1px solid #f5c96a';
+  pasteBtn.style.color = '#f5c96a';
+  pasteBtn.style.padding = '6px 12px';
+  pasteBtn.style.borderRadius = '20px';
+  pasteBtn.style.marginTop = '8px';
+  pasteBtn.style.cursor = 'pointer';
+  
+  pasteBtn.onclick = () => {
+    const audioData = textarea.value.trim();
+    if(audioData && audioData.length > 100) {
+      setEmbeddedAudio(audioData);
+      embedStatus.innerHTML = '✅ Voice embedded successfully! Click STEP 2 to create the final file.';
+      textarea.remove();
+      pasteBtn.remove();
+    } else {
+      embedStatus.innerHTML = '❌ Invalid audio data. Make sure you copied the entire string from localStorage.';
+    }
+  };
+  
+  embedStatus.appendChild(textarea);
+  embedStatus.appendChild(pasteBtn);
+});
+
+// STEP 2: Export FINAL HTML with voice permanently embedded
+document.getElementById('final-export-btn').addEventListener('click', () => {
+  if(!embeddedAudioBase64) {
+    alert('Please embed your voice first using STEP 1!');
+    return;
+  }
+  
+  // Get the current HTML content and create a permanent version
+  const currentHtml = document.documentElement.outerHTML;
+  
+  // Create the final HTML with voice permanently embedded
+  const finalHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday David - With Your Voice</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+${document.querySelector('style').innerHTML}
+#embed-tool{display:none;}
+</style>
+</head>
+<body>
+<div id="app">
+  <canvas id="particles"></canvas>
+  <div id="vignette"></div>
+  <div id="content">
+    <div id="title-area">
+      <span id="flame-icon">🕯</span>
+      <h1>A Toast to the Man of Many Hats</h1>
+      <div class="subtitle">For David</div>
+    </div>
+    <div id="divider"></div>
+    <div id="poem-area">
+      <div class="stanza"><p>The sun hasn't fully climbed the sky,</p><p>But you are already miles into the day.</p><p>With a phone that never stops buzzing</p><p>And a spirit that refuses to slow down,</p></div>
+      <div class="stanza"><p>You navigate the world of business and finance</p><p>With the same steady hand you use on the farm.</p><p>You are a husband who anchors the home,</p><p>A father building a legacy for tomorrow.</p><p>You know that "life has no rest" when there are dreams to feed</p></div>
+      <div class="stanza"><p>So may this year bring the "good money"</p><p>And the great peace you've earned.</p><p>May the projects you've planted continue to bloom toward forty,</p><p>And may your birthday be a rare moment to breathe,</p><p>To look at the life you are constructing</p><p>And see that it is good.</p></div>
+      <div class="stanza"><p>So here's to the man who isn't afraid to get his boots dirty,</p><p>The one who hustles in town and thrives in the green,</p><p>The jovial soul who keeps everyone's spirits high.</p></div>
+      <div id="birthday-final">🎂 Happy Birthday, David 🎂<span class="closing">May your numbers keep multiplying,<br>And your harvest always be as big as your laughter.</span></div>
+    </div>
+    <div id="controls">
+      <div id="status">🎤 A special voice message from me to you! 🎤</div>
+      <div id="progress-wrap"><div id="prog-track"><div id="prog-fill"></div></div><div id="prog-time">0:00 / 0:00</div></div>
+      <button class="btn" id="play-btn"><span class="play-icon">🎙️</span><span>Listen to Voice Message</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+// PERMANENTLY EMBEDDED VOICE DATA
+const EMBEDDED_VOICE_DATA = "${embeddedAudioBase64}";
+
+// Particle System
+${document.querySelector('script').innerHTML.split('// PARTICLE SYSTEM')[1].split('// POEM ANIMATION')[0]}
+
+// Poem Animation
+${document.querySelector('script').innerHTML.split('// POEM ANIMATION')[1].split('// SCROLL TO POEM')[0]}
+
+function scrollToPoem() {
+  const poemArea = document.getElementById('poem-area');
+  const y = poemArea.getBoundingClientRect().top + window.pageYOffset - 20;
+  window.scrollTo({top: y, behavior: 'smooth'});
+}
+
+// Play functionality with embedded voice
+const playBtnFinal = document.getElementById('play-btn');
+const progWrapFinal = document.getElementById('progress-wrap');
+const progFillFinal = document.getElementById('prog-fill');
+const progTimeFinal = document.getElementById('prog-time');
+const statusDivFinal = document.getElementById('status');
+
+function fmt(s){const m=Math.floor(s/60);const sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+
+playBtnFinal.addEventListener('click', () => {
+  const binaryStr = atob(EMBEDDED_VOICE_DATA);
+  const bytes = new Uint8Array(binaryStr.length);
+  for(let i=0; i<binaryStr.length; i++) bytes[i] = binaryStr.charCodeAt(i);
+  const audioBlob = new Blob([bytes], {type: 'audio/webm'});
+  const audioUrl = URL.createObjectURL(audioBlob);
+  const audio = new Audio(audioUrl);
+  
+  progWrapFinal.style.display = 'block';
+  progFillFinal.style.width = '0%';
+  playBtnFinal.disabled = true;
+  playBtnFinal.innerHTML = '<span>🕯 Playing...</span>';
+  statusDivFinal.innerHTML = '🎵 Listening to your voice message... 🎵';
+  
+  scrollToPoem();
+  
+  setTimeout(() => {
+    audio.addEventListener('loadedmetadata', () => {
+      const dur = audio.duration;
+      const stanzaTimings = [0, 12.5, 29.5, 43, 50];
+      
+      audio.addEventListener('timeupdate', () => {
+        const currentTime = audio.currentTime;
+        const pct = (currentTime / dur) * 100;
+        progFillFinal.style.width = Math.min(100, pct) + '%';
+        progTimeFinal.textContent = fmt(currentTime) + ' / ' + fmt(dur);
+        
+        let newIndex = 0;
+        for(let i = stanzaTimings.length - 1; i >= 0; i--) {
+          if(currentTime >= stanzaTimings[i]) { newIndex = i; break; }
+        }
+        
+        const stanzasFinal = [...document.querySelectorAll('.stanza')];
+        const bdLineFinal = document.getElementById('birthday-final');
+        
+        stanzasFinal.forEach((s, i) => {
+          s.classList.remove('active', 'past');
+          if(i < newIndex) s.classList.add('past');
+          else if(i === newIndex) s.classList.add('active');
+        });
+        if(newIndex >= stanzasFinal.length) bdLineFinal.classList.add('active');
+        else bdLineFinal.classList.remove('active');
+        
+        if(newIndex < stanzasFinal.length) {
+          stanzasFinal[newIndex].scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+      });
+    });
+    
+    audio.addEventListener('ended', () => {
+      playBtnFinal.disabled = false;
+      playBtnFinal.innerHTML = '<span class="play-icon">🎙️</span><span>Listen Again</span>';
+      statusDivFinal.innerHTML = '✨ Happy Birthday, David! ✨';
+      progWrapFinal.style.display = 'none';
+      progFillFinal.style.width = '0%';
+      const stanzasFinal = [...document.querySelectorAll('.stanza')];
+      const bdLineFinal = document.getElementById('birthday-final');
+      stanzasFinal.forEach(s => s.classList.add('active'));
+      bdLineFinal.classList.add('active');
+    });
+    
+    audio.play();
+  }, 400);
+});
+
+// Initial state
+const stanzasInit = [...document.querySelectorAll('.stanza')];
+stanzasInit[0].classList.add('active');
+document.getElementById('birthday-final').classList.add('active');
+<\/script>
+</body>
+</html>`;
+  
+  // Download the final file
+  const blob = new Blob([finalHtml], {type: 'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'david_birthday_FINAL_WITH_VOICE.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  document.getElementById('embed-status').innerHTML = '✅ FINAL FILE DOWNLOADED!<br>📁 File: david_birthday_FINAL_WITH_VOICE.html<br>📤 Upload THIS file to GitHub and share with David!';
+  alert('✅ FINAL FILE CREATED!\n\nFile saved as: david_birthday_FINAL_WITH_VOICE.html\n\nUpload THIS file to GitHub and share the link with David.\n\nHis voice message is now PERMANENTLY embedded!');
 });
 
 resetPoem();
 bdLine.classList.add('active');
 activateStanza(0);
-
-// Show setup instructions
-console.log('%c🎤 SETUP INSTRUCTIONS 🎤', 'color: #f5c96a; font-size: 16px; font-weight: bold;');
-console.log('1. Open your OLD HTML file that has your recording');
-console.log('2. Press F12, go to Console, and run:');
-console.log('   const audio = localStorage.getItem("david_birthday_audio");');
-console.log('   console.log(audio);');
-console.log('3. Copy the entire output (it will be a long string)');
-console.log('4. Come back to THIS page, and run:');
-console.log('   setEmbeddedAudio("PASTE_THE_STRING_HERE");');
-console.log('');
-console.log('Or click the button below to auto-load if available:');
-
-// Check if we can auto-load from localStorage (if this is the same computer)
-const savedAudio = localStorage.getItem('david_birthday_audio');
-if(savedAudio) {
-  embeddedAudioBase64 = savedAudio;
-  statusDiv.innerHTML = '✅ Voice message loaded! Click play to listen ✨';
-  playBtn.disabled = false;
-  console.log('✅ Auto-loaded your recording from localStorage!');
-}
-
-// Add helper button in console
-window.setEmbeddedAudio = setEmbeddedAudio;
 </script>
 </body>
 </html>
