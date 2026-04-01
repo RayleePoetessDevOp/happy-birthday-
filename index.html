@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday David - With Your Voice</title>
+<title>Happy Birthday David</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -195,36 +195,7 @@ function createFinalHTML(audioData) {
 <title>Happy Birthday David - With Your Voice</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#000;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;scroll-behavior:smooth;}
-#app{width:100%;max-width:700px;min-height:100vh;background:#09070a;font-family:'Cormorant Garamond',serif;color:#e8d5a3;position:relative;overflow-x:hidden;}
-canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
-#vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(0,0,0,0.8) 100%);}
-#content{position:relative;z-index:3;padding:2.5rem 2rem 3rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
-#title-area{text-align:center;padding-top:0.5rem;}
-#flame-icon{font-size:28px;display:block;animation:flicker 2.5s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(245,140,20,0.9));margin-bottom:0.5rem;}
-@keyframes flicker{0%,100%{transform:scaleY(1) skewX(0deg)}25%{transform:scaleY(1.06) skewX(-1.5deg)}50%{transform:scaleY(0.96) skewX(1deg)}75%{transform:scaleY(1.04) skewX(-0.5deg)}}
-h1{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,30px);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#f5c96a;text-shadow:0 0 40px rgba(245,180,60,0.5),0 0 80px rgba(245,140,20,0.2);}
-.subtitle{font-size:13px;letter-spacing:0.35em;color:#7a5a30;margin-top:6px;text-transform:uppercase;}
-#divider{width:100px;height:1px;background:linear-gradient(90deg,transparent,#9a6a20,transparent);margin:0.2rem auto;}
-#poem-area{width:100%;max-width:580px;text-align:center;font-size:clamp(15px,2.8vw,18px);line-height:1.9;color:#ddc98a;display:flex;flex-direction:column;align-items:center;gap:1.4rem;}
-.stanza{opacity:0.2;transition:opacity 0.6s ease,text-shadow 0.4s ease, transform 0.3s ease;max-width:520px;transform: scale(0.98);}
-.stanza.active{opacity:1;text-shadow:0 0 30px rgba(245,180,60,0.4);transform: scale(1);}
-.stanza.past{opacity:0.35;}
-.stanza p{margin-bottom:2px;}
-#birthday-final{font-family:'Playfair Display',serif;font-size:clamp(17px,3.5vw,24px);font-weight:600;color:#f5c96a;text-shadow:0 0 30px rgba(245,180,60,0.9),0 0 60px rgba(245,140,20,0.4);text-align:center;opacity:0;transition:opacity 1.5s ease;margin-top:0.5rem;}
-#birthday-final.active{opacity:1;}
-#controls{display:flex;flex-direction:column;align-items:center;gap:0.9rem;width:100%;max-width:360px;margin-top:1.5rem;margin-bottom:1rem;}
-.btn{background:linear-gradient(135deg, rgba(245,180,60,0.15), rgba(245,140,20,0.05));border:1px solid rgba(245,180,60,0.5);color:#f5c96a;font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:0.15em;padding:14px 32px;border-radius:60px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;gap:12px;width:100%;justify-content:center;font-weight:500;}
-.btn:hover{background:rgba(245,180,60,0.25);border-color:#f5c96a;box-shadow:0 0 35px rgba(245,140,20,0.3);transform:scale(1.02);}
-.btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
-#progress-wrap{width:100%;display:none;margin-top:0.5rem;}
-#prog-track{width:100%;height:3px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
-#prog-fill{height:100%;width:0%;background:linear-gradient(90deg,#f5c96a,#f5a420);transition:width 0.1s linear;border-radius:3px;}
-#prog-time{font-size:11px;color:#7a5a30;letter-spacing:0.2em;text-align:right;margin-top:6px;}
-#status{font-size:13px;letter-spacing:0.2em;color:#9a6a30;text-align:center;min-height:20px;}
-.play-icon{font-size:22px;animation: gentlePulse 2s infinite;}
-@keyframes gentlePulse{0%,100%{opacity:0.7;}50%{opacity:1;transform:scale(1.05);}}
+${document.querySelector('style').innerHTML.split('#file-upload-area')[0]}
 </style>
 </head>
 <body>
@@ -251,68 +222,7 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,30px);font-weig
 <script>
 const EMBEDDED_VOICE = "${audioData}";
 
-// PARTICLE SYSTEM
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-
-function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-resize();
-window.addEventListener('resize',resize);
-
-class Particle{
-  constructor(){this.reset(true);}
-  reset(init){
-    this.x=Math.random()*canvas.width;
-    this.y=init?Math.random()*canvas.height:canvas.height+10;
-    this.size=Math.random()*2.5+0.3;
-    this.vy=Math.random()*0.7+0.2;
-    this.vx=(Math.random()-0.5)*0.3;
-    this.phase=Math.random()*Math.PI*2;
-    this.life=0;
-    this.maxLife=Math.random()*0.6+0.3;
-    const r=Math.random();
-    this.r=r<0.5?245:r<0.8?240:255;
-    this.g=r<0.5?170:r<0.8?130:100;
-    this.b=r<0.5?50:r<0.8?35:25;
-    if(init){this.life=Math.random()*this.maxLife;}
-  }
-  update(){
-    this.y-=this.vy;
-    this.x+=this.vx+Math.sin(this.y*0.02+this.phase)*0.25;
-    this.life+=0.008;
-    if(this.life<0.2) this.alpha=this.life/0.2;
-    else if(this.life>this.maxLife) this.alpha=Math.max(0,1-(this.life-this.maxLife)/(1-this.maxLife));
-    else this.alpha=1;
-    if(this.y<-10||this.life>=1) this.reset(false);
-  }
-  draw(){
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle=\`rgba(\${this.r},\${this.g},\${this.b},\${this.alpha*0.6})\`;
-    ctx.fill();
-  }
-}
-
-const parts=[];
-for(let i=0;i<180;i++) parts.push(new Particle());
-(function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);parts.forEach(p=>{p.update();p.draw();});requestAnimationFrame(loop);})();
-
-// POEM ANIMATION
-const stanzas = [...document.querySelectorAll('.stanza')];
-const bdLine = document.getElementById('birthday-final');
-let currentActiveIndex = -1;
-
-function activateStanza(index){
-  if(index === currentActiveIndex) return;
-  currentActiveIndex = index;
-  stanzas.forEach((s, i) => {
-    s.classList.remove('active', 'past');
-    if(i < index) s.classList.add('past');
-    else if(i === index) s.classList.add('active');
-  });
-  if(index >= stanzas.length) bdLine.classList.add('active');
-  else bdLine.classList.remove('active');
-}
+${document.querySelector('script').innerHTML.split('// PARTICLE SYSTEM')[1].split('// UPLOAD VOICE FILE')[0]}
 
 function scrollToPoem() {
   const poemArea = document.getElementById('poem-area');
@@ -320,7 +230,6 @@ function scrollToPoem() {
   window.scrollTo({top: y, behavior: 'smooth'});
 }
 
-// PLAY FUNCTION WITH YOUR ORIGINAL TIMINGS
 const playBtnFinal = document.getElementById('play-btn');
 const progWrapFinal = document.getElementById('progress-wrap');
 const progFillFinal = document.getElementById('prog-fill');
@@ -348,15 +257,7 @@ playBtnFinal.addEventListener('click', () => {
   setTimeout(() => {
     audio.addEventListener('loadedmetadata', () => {
       const dur = audio.duration;
-      
-      // YOUR ORIGINAL TIMINGS THAT WORKED
-      const stanzaTimings = [
-        0,      // Stanza 0 starts at 0 seconds
-        12.5,   // Stanza 1 starts at 12.5 seconds
-        29.5,   // Stanza 2 starts at 29.5 seconds
-        43,     // Stanza 3 starts at 43 seconds
-        50      // Final message starts at 50 seconds
-      ];
+      const stanzaTimings = [0, 12.5, 29.5, 43, 50];
       
       audio.addEventListener('timeupdate', () => {
         const currentTime = audio.currentTime;
@@ -369,11 +270,19 @@ playBtnFinal.addEventListener('click', () => {
           if(currentTime >= stanzaTimings[i]) { newIndex = i; break; }
         }
         
-        if(newIndex !== currentActiveIndex && newIndex >= 0 && newIndex <= stanzas.length) {
-          activateStanza(newIndex);
-          if(newIndex < stanzas.length) {
-            stanzas[newIndex].scrollIntoView({behavior: 'smooth', block: 'center'});
-          }
+        const stanzasFinal = [...document.querySelectorAll('.stanza')];
+        const bdLineFinal = document.getElementById('birthday-final');
+        
+        stanzasFinal.forEach((s, i) => {
+          s.classList.remove('active', 'past');
+          if(i < newIndex) s.classList.add('past');
+          else if(i === newIndex) s.classList.add('active');
+        });
+        if(newIndex >= stanzasFinal.length) bdLineFinal.classList.add('active');
+        else bdLineFinal.classList.remove('active');
+        
+        if(newIndex < stanzasFinal.length) {
+          stanzasFinal[newIndex].scrollIntoView({behavior: 'smooth', block: 'center'});
         }
       });
     });
@@ -382,9 +291,11 @@ playBtnFinal.addEventListener('click', () => {
       playBtnFinal.disabled = false;
       playBtnFinal.innerHTML = '<span class="play-icon">🎙️</span><span>Listen Again</span>';
       statusDivFinal.innerHTML = '✨ Happy Birthday, David! ✨';
-      activateStanza(stanzas.length);
       progWrapFinal.style.display = 'none';
-      progFillFinal.style.width = '0%';
+      const stanzasFinal = [...document.querySelectorAll('.stanza')];
+      const bdLineFinal = document.getElementById('birthday-final');
+      stanzasFinal.forEach(s => s.classList.add('active'));
+      bdLineFinal.classList.add('active');
     });
     
     audio.play();
@@ -406,7 +317,7 @@ bdLine.classList.add('active');
   URL.revokeObjectURL(url);
   
   uploadStatus.innerHTML = '✅ FINAL FILE CREATED! File downloaded. Upload THIS file to GitHub!';
-  alert('✅ FINAL FILE CREATED!\n\nFile: david_birthday_FINAL.html\n\nUpload THIS file to GitHub and share with David!\n\nYour voice is now permanently embedded!');
+  alert('✅ FINAL FILE CREATED!\n\nFile: david_birthday_FINAL.html\n\nUpload THIS file to GitHub and share with David!');
 }
 
 stanzas[0].classList.add('active');
